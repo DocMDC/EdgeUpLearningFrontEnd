@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { setAuth, logOut } from "../slices/authSlice"
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/v1",
+    // baseUrl: "http://localhost:5000/api/v1",
+    baseUrl: 'https://edgeuplearning-api/v1.onrender.com',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token
