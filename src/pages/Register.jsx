@@ -2,13 +2,14 @@ import React, {useState, useRef, useEffect} from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useRegisterMutation } from "../redux/slices/authApiSlice"
 import { setAuth } from '../redux/slices/authSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function Register() {
-    const [registerUser, {isLoading} ] = useRegisterMutation()
+    const [registerUser] = useRegisterMutation()
+    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
@@ -61,6 +62,7 @@ export default function Register() {
 
     async function submitRegisterForm(e) {
         e.preventDefault()
+        
         const emailIsValid = EMAIL_REGEX.test(registerForm.email)
         const passwordIsValid = PWD_REGEX.test(registerForm.password)
 
@@ -70,6 +72,7 @@ export default function Register() {
         }
         
         try {
+            setIsLoading(true)
             const result = await registerUser ({ 
                 email: registerForm.email.toLowerCase(),
                 password: registerForm.password
@@ -99,6 +102,8 @@ export default function Register() {
             } else {
                 setErrMsg("Server failed. Please Try again later.")
             }
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -152,7 +157,12 @@ export default function Register() {
                     />
                     <p className={confirmPwdFocus && !validMatch ? "text-red-600 text-xs mt-2 mb-2" : "hidden"}>Must match the first password input field.</p>
                     
+                    {isLoading 
+                    ? 
+                    <button className="front-btn-1" disabled={true}>Submitting...</button>
+                    :
                     <button className={!validEmail || !validPwd || !validMatch ? "mx-auto w-56 flex items-center justify-center bg-gray-200 rounded-2xl h-12 p-2 text-black" : "front-btn-1"} disabled={!validEmail || !validPwd || !validMatch ? true : false}>Submit</button>
+                    }
 
                     <h6 className="text-[12px] mb-6 mt-4">Already a user? <span className="text-front-500 cursor-pointer hover:text-front-600"><Link to="/login">Login here.</Link></span></h6>
                     <h6 className="text-[12px]">By clicking submit, I acknowledge receipt of the Edge Up Learning, inc. 

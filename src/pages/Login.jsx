@@ -8,6 +8,7 @@ const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+")
 
 export default function Login() {
   const [loginUser] = useLoginMutation()
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentPersistState = useSelector(selectPersist) 
@@ -59,6 +60,8 @@ export default function Login() {
     }
 
     try {
+      setIsLoading(true)
+
       const response = await loginUser({
         email: loginForm.email.toLowerCase(),
         password: loginForm.password
@@ -89,6 +92,8 @@ export default function Login() {
       } else {
         setErrMsg("Server failed. Please try again later.")
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -136,7 +141,12 @@ export default function Login() {
             />
           </div>          
 
+          {isLoading 
+          ? 
+          <button className="mx-auto w-56 flex items-center justify-center bg-front-500 rounded-2xl h-12 p-2 text-white" disabled={true}>Submitting...</button>
+          :
           <button className={!validEmail || loginForm.password.length === 0 ? "mx-auto w-56 flex items-center justify-center bg-gray-200 rounded-2xl h-12 p-2 text-black" : "mx-auto w-56 flex items-center justify-center bg-front-500 rounded-2xl h-12 p-2 cursor-pointer text-white transition ease-in-out delay-75 hover:bg-front-600"} disabled={!validEmail ? true : false}>Submit</button>
+          }
 
           <h6 className="text-[12px] mt-6 text-black">Not a user? <span className="text-front-500 cursor-pointer hover:text-front-600"><Link to="/register">Register here.</Link></span></h6>
           <h6 className="text-[12px] mt-2 text-black">Forgot your <span className="text-front-500 cursor-pointer hover:text-front-600"><Link to="/forgot-password">password?</Link></span></h6>

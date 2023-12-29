@@ -8,8 +8,6 @@ import { useLogout } from "../hooks/useLogout"
 import { IoIosCreate } from 'react-icons/io'
 import { MdQuiz } from "react-icons/md"
 import { MdOutlineManageAccounts } from "react-icons/md"
-// import { setExamNameModal, selectExamNameModal } from '../redux/slices/modalSlice'
-// import { useDispatch, useSelector } from 'react-redux'
 
 export default function UserNav() {
     const logout = useLogout()
@@ -23,19 +21,13 @@ export default function UserNav() {
         setHamburgerIsClicked(false)
     })
 
-    // const dispatch = useDispatch()
-    // const examNameModalState = useSelector(selectExamNameModal) 
-  
-    // function toggleCreateExamModal() {
-    //   dispatch(setExamNameModal(!examNameModalState))
-    //   setHamburgerIsClicked(false)
-    // }
-
   return (
     <>
-        <Link to="/dashboard" className="mr-auto md:min-h-[192px] md:flex md:items-center md:justify-center md:mr-0 md:w-full md:border-b md:border-600">
-            <h1 className="hover:text-600">Edge Up Learning</h1>
-        </Link>
+        <div className="mr-auto md:min-h-[192px] md:flex md:items-center md:justify-center md:mr-0 md:w-full md:border-b md:border-600">
+            <Link to="/dashboard" >
+                <h1 className="hover:text-600">Edge Up Learning</h1>
+            </Link>
+        </div>
         <div className="flex items-center md:w-full md:flex-grow md:flex-col md:justify-between">
             <div 
                 className="text-3xl text-200 cursor-pointer md:hidden hover:text-600 transition ease-in-out delay-75"
