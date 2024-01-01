@@ -167,36 +167,22 @@ export default function UserCreateExam() {
   // BUG OCCURS BELOW HERE //
 
   //shuffle array function
-  function shuffle(array) {
-    let currentIndex = array.length, randomIndex;
-  
-    // While there remain elements to shuffle.
-    while (currentIndex > 0) {
-  
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]]
+ function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
-  
-    return array
-  }
+}
 
   // BUG OCCURS ABOVE HERE //
   
   // //Shuffle the array
-  const shuffledFlattenedArray = shuffle(flattenedArray)
+  const shuffledFlattenedArray = shuffleArray(flattenedArray)
   console.log('this is the shuffled and flattened array:')
   console.log(shuffledFlattenedArray)
 
   //pick the first elements from the array based on the user's number of questions selected
-  const filteredArrayByRequestedCount = shuffledFlattenedArray.slice(0, selectedNumberOfQuestions)
-
-  console.log('this is the filteredArrayByRequestedCount')
-  console.log(filteredArrayByRequestedCount)
+  const filteredArrayByRequestedCount = shuffledFlattenedArray.slice(0, parseInt(selectedNumberOfQuestions))
 
   //change the used value to true before submission to server
   const updateUsedValue = filteredArrayByRequestedCount.map((question) => ({
