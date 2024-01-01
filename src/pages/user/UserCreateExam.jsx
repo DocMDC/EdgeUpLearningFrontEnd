@@ -167,33 +167,33 @@ export default function UserCreateExam() {
   // BUG OCCURS BELOW HERE //
 
   //shuffle array function
-  // function shuffle(array) {
-  //   let currentIndex = array.length, randomIndex;
+  function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
   
-  //   // While there remain elements to shuffle.
-  //   while (currentIndex > 0) {
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
   
-  //     // Pick a remaining element.
-  //     randomIndex = Math.floor(Math.random() * currentIndex);
-  //     currentIndex--
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--
   
-  //     // And swap it with the current element.
-  //     [array[currentIndex], array[randomIndex]] = [
-  //       array[randomIndex], array[currentIndex]]
-  //   }
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]]
+    }
   
-  //   return array
-  // }
+    return array
+  }
 
   // BUG OCCURS ABOVE HERE //
   
   // //Shuffle the array
-  // const shuffledFlattenedArray = shuffle(flattenedArray)
-  // console.log('this is the shuffled and flattened array:')
-  // console.log(shuffledFlattenedArray)
+  const shuffledFlattenedArray = shuffle(flattenedArray)
+  console.log('this is the shuffled and flattened array:')
+  console.log(shuffledFlattenedArray)
 
   //pick the first elements from the array based on the user's number of questions selected
-  const filteredArrayByRequestedCount = flattenedArray.slice(0, selectedNumberOfQuestions)
+  const filteredArrayByRequestedCount = shuffledFlattenedArray.slice(0, selectedNumberOfQuestions)
 
   console.log('this is the filteredArrayByRequestedCount')
   console.log(filteredArrayByRequestedCount)
