@@ -47,7 +47,6 @@ export default function UserCreateExam() {
 
   //When the user navigates to the page, clear out the state in Context so that the form is clear
   useEffect(() => {
-      console.log('executing when loading')
       setFinalQuestionCountLength(0)
       setSelectedNumberOfQuestions(0)
       setCreateExamForm({
@@ -162,6 +161,9 @@ export default function UserCreateExam() {
     return filteredOrgansBySubjects[organSystem]
   })
 
+  console.log('this is the flattenedArray:')
+  console.log(flattenedArray)
+
   //shuffle array function
   function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
@@ -183,9 +185,14 @@ export default function UserCreateExam() {
 
   //Shuffle the array
   const shuffledFlattenedArray = shuffle(flattenedArray)
+  console.log('this is the shuffled and flattened array:')
+  console.log(shuffledFlattenedArray)
 
   //pick the first elements from the array based on the user's number of questions selected
   const filteredArrayByRequestedCount = shuffledFlattenedArray.slice(0, parseInt(selectedNumberOfQuestions))
+
+  console.log('this is the filteredArrayByRequestedCount')
+  console.log(filteredArrayByRequestedCount)
 
   //change the used value to true before submission to server
   const updateUsedValue = filteredArrayByRequestedCount.map((question) => ({
