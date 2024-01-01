@@ -7,11 +7,13 @@ import SelectNumberOfQuestions from "../../components/SelectNumberOfQuestions"
 import { nanoid } from "nanoid"
 import { useFilterQuestionsQuery, usePrepareQuestionsMutation } from "../../redux/slices/questionsApiSlice"
 import {Context} from "../../Context"
+import LoadingGif from "../../assets/loading.gif"
 
 export default function UserCreateExam() {
   const navigate = useNavigate()
   const { data: filteredQuestionData, error, isLoading, refetch } = useFilterQuestionsQuery()
   const [prepareQuestions] = usePrepareQuestionsMutation()
+  const [loadingSubmission, setLoadingSubmission] = useState(false)
   
   const { createExamForm, setCreateExamForm } = useContext(Context)
   const incorrectCountRef = useRef()
@@ -147,25 +149,25 @@ export default function UserCreateExam() {
   }
   
   const filterSelectedQuestions = () => {
-   //Randomly select number of questions from filteredOrgansBySubjects based on finalQuestionCountLength
-  //Convert to an array of questions
-
-  const flattenedArray = Object.keys(filteredOrgansBySubjects).flatMap((organSystem) => {
-    return filteredOrgansBySubjects[organSystem]
-  })
-
-  //TODO: Should implement a shuffled array here before giving the user the number of questions they request
-
-  //pick the first elements from the array based on the user's number of questions selected
-  const filteredArrayByRequestedCount = flattenedArray.slice(0, parseInt(selectedNumberOfQuestions))
-
-  //change the used value to true before submission to server
-  const updateUsedValue = filteredArrayByRequestedCount.map((question) => ({
-    ...question,
-    used: true,
-  }))
-  return updateUsedValue
- }
+    //Randomly select number of questions from filteredOrgansBySubjects based on finalQuestionCountLength
+   //Convert to an array of questions
+ 
+   const flattenedArray = Object.keys(filteredOrgansBySubjects).flatMap((organSystem) => {
+     return filteredOrgansBySubjects[organSystem]
+   })
+ 
+   //TODO: Should implement a shuffled array here before giving the user the number of questions they request
+ 
+   //pick the first elements from the array based on the user's number of questions selected
+   const filteredArrayByRequestedCount = flattenedArray.slice(0, parseInt(selectedNumberOfQuestions))
+ 
+   //change the used value to true before submission to server
+   const updateUsedValue = filteredArrayByRequestedCount.map((question) => ({
+     ...question,
+     used: true,
+   }))
+   return updateUsedValue
+  }
 
 
   async function submitCreateExam(e) {
@@ -180,6 +182,7 @@ export default function UserCreateExam() {
     const tutor = createExamForm.tutorMode
 
     try {
+      setLoadingSubmission(true)
       const response = await prepareQuestions({
         filteredList,
         timed,
@@ -190,6 +193,8 @@ export default function UserCreateExam() {
       navigate(`/exam/${examSessionId}`)
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoadingSubmission(false)
     }
   }
 
@@ -279,7 +284,12 @@ export default function UserCreateExam() {
             handleSelectNumberOfQuestions={handleSelectNumberOfQuestions}
             selectedNumberOfQuestions={selectedNumberOfQuestions}
           />
-          <button className="ml-6 primary-btn">Create Exam</button>
+          {loadingSubmission 
+            ? 
+            <button className="ml-6 w-56 flex items-center justify-center bg-public-400 rounded-2xl h-12 cursor-pointer text-white transition ease-in-out delay-75 hover:bg-public-300 py-2 px-4">Creating Exam...<span className="h-12 flex items-center justify-center ml-auto"><img src={LoadingGif} alt="loading gif" className="h-12"/></span></button>
+            : 
+            <button className="ml-6 primary-btn">Create Exam</button>
+          }
         </form>
       </div>
     </div>

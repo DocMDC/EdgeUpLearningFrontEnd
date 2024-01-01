@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useLoginMutation } from "../redux/slices/authApiSlice"
 import { setAuth, setPersist, selectPersist } from '../redux/slices/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import LoadingGif from "../assets/loading.gif"
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -143,7 +144,7 @@ export default function Login() {
 
           {isLoading 
           ? 
-          <button className="mx-auto w-56 flex items-center justify-center bg-front-500 rounded-2xl h-12 p-2 text-white" disabled={true}>Submitting...</button>
+          <button className="mx-auto w-56 flex items-center justify-center bg-front-500 rounded-2xl h-12 py-2 px-8 text-white" disabled={true}>Logging in...<span className="h-12 flex items-center justify-center ml-auto"><img src={LoadingGif} alt="loading gif" className="h-12"/></span></button>
           :
           <button className={!validEmail || loginForm.password.length === 0 ? "mx-auto w-56 flex items-center justify-center bg-gray-200 rounded-2xl h-12 p-2 text-black" : "mx-auto w-56 flex items-center justify-center bg-front-500 rounded-2xl h-12 p-2 cursor-pointer text-white transition ease-in-out delay-75 hover:bg-front-600"} disabled={!validEmail ? true : false}>Submit</button>
           }

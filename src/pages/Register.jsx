@@ -2,7 +2,8 @@ import React, {useState, useRef, useEffect} from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useRegisterMutation } from "../redux/slices/authApiSlice"
 import { setAuth } from '../redux/slices/authSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import LoadingGif from "../assets/loading.gif"
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -159,10 +160,12 @@ export default function Register() {
                     
                     {isLoading 
                     ? 
-                    <button className="front-btn-1" disabled={true}>Submitting...</button>
+                    <button className="front-btn-1 py-2 px-8" disabled={true}>Registering...<span className="h-12 flex items-center justify-center ml-auto"><img src={LoadingGif} alt="loading gif" className="h-12"/></span></button>
                     :
                     <button className={!validEmail || !validPwd || !validMatch ? "mx-auto w-56 flex items-center justify-center bg-gray-200 rounded-2xl h-12 p-2 text-black" : "front-btn-1"} disabled={!validEmail || !validPwd || !validMatch ? true : false}>Submit</button>
                     }
+
+                    
 
                     <h6 className="text-[12px] mb-6 mt-4">Already a user? <span className="text-front-500 cursor-pointer hover:text-front-600"><Link to="/login">Login here.</Link></span></h6>
                     <h6 className="text-[12px]">By clicking submit, I acknowledge receipt of the Edge Up Learning, inc. 

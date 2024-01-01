@@ -2,7 +2,6 @@
 import { apiSlice } from "../api/apiSlice";
 
 export const examsApiSlice = apiSlice.injectEndpoints({
-  tagTypes: ['Exam'],
   endpoints: (builder) => ({
     getExams: builder.query({
       query: () => "/get-exams",
@@ -44,7 +43,6 @@ export const examsApiSlice = apiSlice.injectEndpoints({
         url: `/update-flags`,
         method: 'PATCH',
         body: { ...questionInformation },
-        providesTags: ['Exam']
       }),
 
       async onQueryStarted(questionInformation, { dispatch, queryFulfilled }) {
@@ -63,8 +61,7 @@ export const examsApiSlice = apiSlice.injectEndpoints({
         try {
           await queryFulfilled;
         } catch {
-          // patchResult.undo();
-          dispatch(api.util.invalidateTags(['Exam']))
+          patchResult.undo();
         }
       },
     }),
