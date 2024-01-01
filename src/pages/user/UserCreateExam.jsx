@@ -45,6 +45,30 @@ export default function UserCreateExam() {
     refetch()
   }, [])
 
+  //When the user navigates to the page, clear out the state in Context so that the form is clear
+  useEffect(() => {
+      console.log('executing when loading')
+      setFinalQuestionCountLength(0)
+      setSelectedNumberOfQuestions(0)
+      setCreateExamForm({
+        tutorMode: false,
+        timedMode: false,
+        unused: false,
+        incorrect: false,
+        anatomy: false,
+        microbiology: false,
+        biochemistry: false,
+        embryology: false,
+        immunology: false,
+        pathology: false,
+        physiology: false,
+        pharmacology: false,
+      })
+      setFilteredOrgansBySubjects({})
+      setSelectedSubjects([])
+      updateMaximumQuestionCount()
+  }, []);
+
   if (isLoading) {
     return <div>Loading...</div>
   }
@@ -124,8 +148,16 @@ export default function UserCreateExam() {
   }
   
   const filterSelectedQuestions = () => {
+      // Check if filteredOrgansBySubjects is defined and is an object
+    if (!filteredOrgansBySubjects || typeof filteredOrgansBySubjects !== 'object') {
+      console.error('filteredOrgansBySubjects is not an object or is undefined.');
+      return []; // Return an empty array or handle this case as appropriate
+    }
+
    //Randomly select number of questions from filteredOrgansBySubjects based on finalQuestionCountLength
   //Convert to an array of questions
+  
+
   const flattenedArray = Object.keys(filteredOrgansBySubjects).flatMap((organSystem) => {
     return filteredOrgansBySubjects[organSystem]
   })
@@ -162,6 +194,7 @@ export default function UserCreateExam() {
   }))
   return updateUsedValue
  }
+
 
   async function submitCreateExam(e) {
     e.preventDefault()

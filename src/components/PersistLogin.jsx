@@ -25,12 +25,7 @@ export default function PersistLogin() {
             }
         }
         
-        if (currentToken === null && trustLocalComputer) {
-            verifyRefreshToken()
-        } else {
-            setIsLoading(false)
-        }
-        // !currentToken && trustLocalComputer ? verifyRefreshToken() : setIsLoading(false)
+        !currentToken && trustLocalComputer ? verifyRefreshToken() : setIsLoading(false)
 
         return () => isMounted = false
     }, [currentToken, trustLocalComputer])

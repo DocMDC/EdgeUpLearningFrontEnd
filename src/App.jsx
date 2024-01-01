@@ -58,7 +58,7 @@ export default function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.user, ROLES.admin, ROLES.teacher, ROLES.architect]} />}>
               <Route path="create-exam" element={<UserCreateExam/>}/>
             </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.admin, ROLES.teacher, ROLES.architect]} />}>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user, ROLES.admin, ROLES.teacher, ROLES.architect]} />}>
               <Route path="my-exams" element={<UserExams/>}/>
             </Route>
             <Route element={<RequireAuth allowedRoles={[ROLES.user, ROLES.admin, ROLES.teacher, ROLES.architect]} />}>
