@@ -155,34 +155,15 @@ export default function UserCreateExam() {
 
    //Randomly select number of questions from filteredOrgansBySubjects based on finalQuestionCountLength
   //Convert to an array of questions
-  
 
   const flattenedArray = Object.keys(filteredOrgansBySubjects).flatMap((organSystem) => {
     return filteredOrgansBySubjects[organSystem]
   })
 
-  console.log('this is the flattenedArray:')
-  console.log(flattenedArray)
-
-  // BUG OCCURS BELOW HERE //
-
-  //shuffle array function
- function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-  // BUG OCCURS ABOVE HERE //
-  
-  // //Shuffle the array
-  const shuffledFlattenedArray = shuffleArray(flattenedArray)
-  console.log('this is the shuffled and flattened array:')
-  console.log(shuffledFlattenedArray)
+  //TODO: Should implement a shuffled array here before giving the user the number of questions they request
 
   //pick the first elements from the array based on the user's number of questions selected
-  const filteredArrayByRequestedCount = shuffledFlattenedArray.slice(0, parseInt(selectedNumberOfQuestions))
+  const filteredArrayByRequestedCount = flattenedArray.slice(0, parseInt(selectedNumberOfQuestions))
 
   //change the used value to true before submission to server
   const updateUsedValue = filteredArrayByRequestedCount.map((question) => ({
