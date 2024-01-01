@@ -147,12 +147,6 @@ export default function UserCreateExam() {
   }
   
   const filterSelectedQuestions = () => {
-      // Check if filteredOrgansBySubjects is defined and is an object
-    if (!filteredOrgansBySubjects || typeof filteredOrgansBySubjects !== 'object') {
-      console.error('filteredOrgansBySubjects is not an object or is undefined.');
-      return []; // Return an empty array or handle this case as appropriate
-    }
-
    //Randomly select number of questions from filteredOrgansBySubjects based on finalQuestionCountLength
   //Convert to an array of questions
 

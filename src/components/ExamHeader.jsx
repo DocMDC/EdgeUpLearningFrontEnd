@@ -43,7 +43,7 @@ export default function ExamHeader({questionIndex, decrementQuestionIndex, incre
     }
 
     return (
-    <div className={darkModeEnabled ? "fixed top-0 left-20 right-0 h-14 p-2 bg-dm-300 text-exam-white flex items-center z-[100]" : "fixed top-0 left-20 right-0 h-14 p-2 bg-exam-secondary text-exam-white flex items-center z-[100]"}>
+    <div className={darkModeEnabled ? "fixed top-0 left-20 right-0 h-14 p-2 bg-dm-300 text-exam-white flex items-center z-[50]" : "fixed top-0 left-20 right-0 h-14 p-2 bg-exam-secondary text-exam-white flex items-center z-[50]"}>
         <div className={darkModeEnabled ? "max-w-[110px] h-10 border-t-2 border-l-2 border-dm-400 rounded-md flex items-center justify-center px-1" : "max-w-[110px] h-10 border-t-2 border-l-2 border-exam-boxShadow rounded-md flex items-center justify-center px-1"}>
             <p className="text-xs">Item: <span>{questionIndex + 1}</span> of <span>{listOfQuestions.length}</span>
             </p>
